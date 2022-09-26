@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alpine demo</title>
+    <script src="https:\\cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.10.3/dist/cdn.min.js"></script>
+</head>
+
+<body>
+    <div class="bg-gray-300 px-10 py-6 rounded" x-data="{ tasks: [], newTask: ''}">
+        <form @submit.prevent="
+            if (tasks.find(element => element === newTask)) {
+                return $dispatch('set-title', { message:'Task Already Exists', show : true })
+            }
+            tasks.push(newTask);" )>
+            <input type="text" x-model="newTask">
+        </form>
+        <ul>
+            <template x-for="(task, index) in tasks" :key="index">
+                <li x-text="task"></li>
+            </template>
+        </ul>
+    </div>
+    <div x-data=" {show: false, message: 'Flash Message'}"
+        @set-title.window="show = $event.detail.show; message = $event.detail.message"
+        class="fixed bottom-0 right-0 bg-green-500 text-white p-2 mb-4 mr-4 rounded" x-show="show" x-text="message">
+    </div>
+</body>
+
+</html>

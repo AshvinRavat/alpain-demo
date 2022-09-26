@@ -33,9 +33,16 @@
         </ol>
     </div>
     <div x-data=" {show: false, message: 'Flash Message'}"
-        @set-title.window="show = $event.detail.show; message = $event.detail.message"
+        @set-title.window="
+            show = $event.detail.show;
+            message = $event.detail.message;
+            setTimeout(function () {
+                show = false;
+                message = '';
+            }, 3000);
+        "
         class="fixed bottom-0 right-0 bg-red-500 text-white p-2 mb-4 mr-4 rounded"
-         x-show="show" x-text="message" >
+         x-show="show" x-text="message">
     </div>
 </body>
 </html>

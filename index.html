@@ -11,24 +11,31 @@
 </head>
 
 <body>
-    <div class="bg-gray-300 px-10 py-6 rounded" x-data="{ tasks: [], newTask: ''}">
+    <div class="bg-gray-300 px-10 py-6 rounded text-center" x-data="{ tasks: [], newTask: ''}">
+        <h1 class="text-lg text-center">To Do Task</h1>
+        <br>
         <form @submit.prevent="
             if (tasks.find(element => element === newTask)) {
                 return $dispatch('set-title', { message:'Task Already Exists', show : true })
             }
-            tasks.push(newTask);" )>
-            <input type="text" x-model="newTask">
+            tasks.push(newTask);
+            newTask='';">
+            <label for="task">
+                Add Task
+            </label> <br>
+            <input type="text" x-model="newTask" id="task"><br>
+            <span class="text-red">(Already Added Task Can't Add)</span>
         </form>
-        <ul>
+        <ol>
             <template x-for="(task, index) in tasks" :key="index">
                 <li x-text="task"></li>
             </template>
-        </ul>
+        </ol>
     </div>
     <div x-data=" {show: false, message: 'Flash Message'}"
         @set-title.window="show = $event.detail.show; message = $event.detail.message"
-        class="fixed bottom-0 right-0 bg-green-500 text-white p-2 mb-4 mr-4 rounded" x-show="show" x-text="message">
+        class="fixed bottom-0 right-0 bg-red-500 text-white p-2 mb-4 mr-4 rounded"
+         x-show="show" x-text="message" >
     </div>
 </body>
-
 </html>
